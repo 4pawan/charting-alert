@@ -64,5 +64,5 @@ def run_multiple_scans_from_csv(csv_data: list[ChartingData], chartink_settings:
         logging.info(f"Running scan for: {row.screener_name}")  # Optional logging
         results = get_chartink_scan_results(row, chartink_settings)
         all_results[row.screener_name] = results
-        time.sleep(4)
+        time.sleep(10)
     return all_results
