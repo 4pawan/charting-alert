@@ -34,12 +34,7 @@ def get_chartink_scan_results(chartingData: ChartingData,chartinkSettings : Char
         "Referer": url,
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
     }
-
-    # payload = {
-    #     "scan_clause": "( {33489} ( [0] 2 hour rsi( 14 ) <= 25 ) )",
-    #     "debug_clause": "groupcount( 1 where [0] 2 hour rsi( 14 ) <= 25 )"
-    # }
-    
+        
     logging.info(f"scan_clause: {chartingData.scan_clause}")
     logging.info(f"debug_clause: {chartingData.debug_clause}")
     
