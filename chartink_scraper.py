@@ -58,13 +58,16 @@ def get_chartink_scan_results(chartingData: ChartingData,chartinkSettings : Char
 
 def run_multiple_scans_from_csv(csv_data: list[ChartingData], chartink_settings: ChartinkSettings):    
     all_results = {}
-    for row in csv_data:
+    for index, row in enumerate(csv_data):    
         if row.active != 1:
             continue
         logger.processing(f"Running scan for: {row.screener_name}") # Optional logging
         results = get_chartink_scan_results(row, chartink_settings)       
         if results:
             key = row.message if row.message else row.screener_name
-            all_results[key] = results            
-        time.sleep(10)
+            all_results[key] = results  
+        
+        if index < len(csv_data) - 1:              
+            time.sleep(10)
+        
     return all_results
