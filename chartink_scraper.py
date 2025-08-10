@@ -1,6 +1,6 @@
 import json
 import requests
-import logging
+import logger
 import time
 from bs4 import BeautifulSoup
 from chart_data import ChartingData
@@ -35,8 +35,8 @@ def get_chartink_scan_results(chartingData: ChartingData,chartinkSettings : Char
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
     }
         
-    logging.info(f"scan_clause: {chartingData.scan_clause}")
-    logging.info(f"debug_clause: {chartingData.debug_clause}")
+    logger.info(f"scan_clause: {chartingData.scan_clause}")
+    logger.info(f"debug_clause: {chartingData.debug_clause}")
     
     payload = {
         "scan_clause": chartingData.scan_clause,
@@ -61,8 +61,10 @@ def run_multiple_scans_from_csv(csv_data: list[ChartingData], chartink_settings:
     for row in csv_data:
         if row.active != 1:
             continue
-        logging.info(f"Running scan for: {row.screener_name}")  # Optional logging
-        results = get_chartink_scan_results(row, chartink_settings)
-        all_results[row.screener_name] = results
+        logger.processing(f"Running scan for: {row.screener_name}") # Optional logging
+        results = get_chartink_scan_results(row, chartink_settings)       
+        if results:
+            key = row.message if row.message else row.screener_name
+            all_results[key] = results            
         time.sleep(10)
     return all_results
