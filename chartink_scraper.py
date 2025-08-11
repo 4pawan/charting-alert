@@ -5,6 +5,7 @@ import time
 from bs4 import BeautifulSoup
 from chart_data import ChartingData
 from settings import ChartinkSettings
+from telegram_client import TelegramClient
 
 def get_chartink_scan_results(chartingData: ChartingData,chartinkSettings : ChartinkSettings):
         
@@ -56,7 +57,7 @@ def get_chartink_scan_results(chartingData: ChartingData,chartinkSettings : Char
     return data.get("data", [])
 
 
-def run_multiple_scans_from_csv(csv_data: list[ChartingData], chartink_settings: ChartinkSettings):    
+def run_multiple_scans_from_csv(csv_data: list[ChartingData], chartink_settings: ChartinkSettings, telegram_client:TelegramClient):    
     all_results = {}
     for index, row in enumerate(csv_data):    
         if row.active != 1:
@@ -66,7 +67,10 @@ def run_multiple_scans_from_csv(csv_data: list[ChartingData], chartink_settings:
         if results:
             key = row.message if row.message else row.screener_name
             all_results[key] = results  
-        
+            
+            if row.alert_message == "1":
+                telegram_client.send_message(f"🚨🚨🚨🚨{key}🚨🚨🚨🚨📊🔊")
+                
         if index < len(csv_data) - 1:              
             time.sleep(10)
         

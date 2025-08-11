@@ -9,7 +9,7 @@ import csv
 class ChartingData:
     active: int
     message: Optional[str]
-    filters: Optional[str]
+    alert_message: Optional[str]
     screener_name: str
     scan_clause: str
     debug_clause: str
@@ -30,8 +30,8 @@ def load_charting_data_from_url(url: str) -> list[ChartingData]:
     for row in reader:
         obj = ChartingData(
             active=int(row["active"]),
-            message=row["Message"] or None,
-            filters=row["filters"] or None,
+            message=row["message"] or None,
+            alert_message=row["alert_message"] or None,
             screener_name=row["screener_name"],
             scan_clause=row["scan_clause"],
             debug_clause=row["debug_clause"]
