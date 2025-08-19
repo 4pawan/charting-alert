@@ -70,7 +70,9 @@ def run_multiple_scans_from_csv(csv_data: list[ChartingData], chartink_settings:
             
             if row.alert_message == "1":
                 telegram_client.send_message(f"🚨🚨🚨🚨{key}🚨🚨🚨🚨📊🔊")
-                
+            
+            telegram_client.send_message(f"{key}\n{json.dumps(results, indent=2)}")
+
         if index < len(csv_data) - 1:              
             time.sleep(10)
         

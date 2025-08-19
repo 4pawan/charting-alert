@@ -24,8 +24,9 @@ def charting_alert_timer_trigger(myTimer: func.TimerRequest) -> None:
     #logging.info(f"process URL234: {csv_chart_data[0].screener_name}")
     csv_chart_data = load_charting_data_from_url(blobSettings.get_csv_url())          
     results = run_multiple_scans_from_csv(csv_chart_data, settings.chartink,telegram_client) 
-    message_text = json.dumps(results, indent=2)
+    #message_text = json.dumps(results, indent=2)
     #telegram_client.send_message("Telegram setup working successfully.")
-    telegram_client.send_message(message_text)    
+    #telegram_client.send_message(message_text)    
     logger.complete(f"Job completed: {datetime.datetime.now().isoformat()}")
+    #func azure functionapp publish test-alert-func-app-example
 
