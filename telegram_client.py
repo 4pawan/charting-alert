@@ -23,3 +23,15 @@ class TelegramClient:
             return "success"
         except requests.RequestException as e:            
             return f"error:{e}"
+        
+        
+    def send_long_messages(self, message: str) -> str:
+        if not message or message == "{}" or not message.strip():
+            return "empty message"
+        
+        max_len = 4000
+        for i in range(0, len(message), max_len):
+            chunk = message[i:i + max_len]
+            self.send_message(chunk)
+            
+
